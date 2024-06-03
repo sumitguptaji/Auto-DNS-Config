@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
   const { apiKey, zoneId, recordType, recordName, recordContent, recordTTL, recordProxied, recordPriority } = await req.json();
 
   if (!apiKey || !zoneId || !recordType || !recordName || !recordContent || !recordTTL) {
-    console.error('Missing required fields:', { apiKey, zoneId, recordType, recordName, recordContent, recordTTL });
+    console.error('Missing required fields:', { apiKey, zoneId, recordType, recordName, recordContent, recordTTL1 });
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
   }
 
