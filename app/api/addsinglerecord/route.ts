@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     type: recordType,
     name: recordName,
     content: recordContent,
-    ttl: parseInt(recordTTL1, 10),
+    ttl: parseInt(recordTTL, 10),
     proxied: recordProxied || false,
     priority: recordType === 'MX' ? recordPriority : undefined,
   };
