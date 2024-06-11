@@ -21,6 +21,7 @@ export default function Home() {
     const savedApiKey = localStorage.getItem("apiKey");
     if (savedApiKey) {
       setApiKey(savedApiKey);
+      setNewApiKey(savedApiKey);
     }
   }, []);
 
@@ -58,23 +59,24 @@ export default function Home() {
   const addZones = async () => {
     setError("");
     try {
-      const response: any = await fetch("/api/zone/addzone", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response: any = await axios.post(
+        "/api/zone/addzone",
+        {
+          body: JSON.stringify({ apiKey: newApiKey, domainName }),
         },
-        body: JSON.stringify({ apiKey: newApiKey, domainName }),
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message);
-      }
+      if (!response.data.data.length) return;
 
-      setServerNames(response.original_name_servers);
+      setServerNames(response.data.data);
       localStorage.setItem("apiKey", newApiKey);
     } catch (error: any) {
-      console.error("Error fetching zones:", error);
+      console.error("Error add zones:", error);
       setError(error.message);
     }
   };
@@ -153,7 +155,7 @@ export default function Home() {
         {!!serverNames?.length && (
           <ul className="list-disc pl-5 space-y-2">
             {serverNames.map((v: any) => (
-              <li className="cursor-pointer text-blue-500 hover:underline">
+              <li key={v} className="cursor-pointer text-blue-500 hover:underline">
                 {v}
               </li>
             ))}
