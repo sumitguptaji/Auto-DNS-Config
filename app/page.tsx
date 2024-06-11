@@ -14,6 +14,7 @@ export default function Home() {
   const [domainName, setDomainName] = useState("");
   const [zones, setZones] = useState<Zone[]>([]);
   const [error, setError] = useState("");
+  const [serverNames, setServerNames] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -57,7 +58,7 @@ export default function Home() {
   const addZones = async () => {
     setError("");
     try {
-      const response = await fetch("/api/zone/addzone", {
+      const response: any = await fetch("/api/zone/addzone", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -70,8 +71,7 @@ export default function Home() {
         throw new Error(errorData.message);
       }
 
-      console.log(response);
-
+      setServerNames(response.original_name_servers);
       localStorage.setItem("apiKey", newApiKey);
     } catch (error: any) {
       console.error("Error fetching zones:", error);
@@ -149,6 +149,16 @@ export default function Home() {
             </button>
           </div>
         </div>
+
+        {!!serverNames?.length && (
+          <ul className="list-disc pl-5 space-y-2">
+            {serverNames.map((v: any) => (
+              <li className="cursor-pointer text-blue-500 hover:underline">
+                {v}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
