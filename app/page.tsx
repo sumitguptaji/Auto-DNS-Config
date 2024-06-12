@@ -98,7 +98,7 @@ const AddZoneComponent = () => {
           type="text"
           value={domainName}
           onChange={(e) => setDomainName(e.target.value)}
-          placeholder="Enter your Cloudflare API key"
+          placeholder="Enter your Domain"
           className="p-3 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
@@ -106,7 +106,7 @@ const AddZoneComponent = () => {
           type="text"
           value={accountId}
           onChange={(e) => setAccountId(e.target.value)}
-          placeholder="Enter your Cloudflare API key"
+          placeholder="Enter your Account Id"
           className="p-3 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
