@@ -208,31 +208,20 @@ const GetZoneComponent = () => {
 
       {/* <ul className="list-disc pl-5 space-y-2"> */}
       {zones.length > 0 && (
-        <table className="table-fixed w-full">
-          <thead>
-            <tr >
-              <th className="px-4 py-2 border border-emerald-500 text-emerald-500 ">Title</th>
-            </tr>
-          </thead>
-          <tbody>
+        <div className="h-[400px] overflow-y-scroll scrollbar scrollbar-thumb-blue-600 scrollbar-style my-6">
+          <ul className="list-disc pl-5 space-y-2">
             {zones.map((zone) => (
-              <tr key={zone.id} onClick={() => handleZoneSelect(zone)}>
-                <td className="border border-emerald-500 px-4 py-2 text-emerald-600 font-medium cursor-pointer text-blue-500 hover:underline">
-                  {zone.name} (ID: {zone.id})
-                </td>
-              </tr>
+              <li
+                key={zone.id}
+                onClick={() => handleZoneSelect(zone)}
+                className="cursor-pointer text-blue-500 hover:underline"
+              >
+                {zone.name} (ID: {zone.id})
+              </li>
             ))}
-          </tbody>
-        </table>
+          </ul>
+        </div>
       )}
     </>
   );
 };
-
-// <li
-//   key={zone.id}
-//   onClick={() => handleZoneSelect(zone)}
-//   className="cursor-pointer text-blue-500 hover:underline"
-// >
-//   {zone.name} (ID: {zone.id})
-// </li>
