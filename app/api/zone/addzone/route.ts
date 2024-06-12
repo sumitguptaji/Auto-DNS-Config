@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   try {
     let { body } = await request.json();
-    const { apiKey, domainName } = JSON.parse(body);
+    const { apiKey, domainName, accountId } = JSON.parse(body);
 
     const data = {
-      account: { id: "2f3c9a94b2b8e91f27eaaaab12e70b3e" },
+      account: { id: accountId },
       name: domainName,
       type: "full",
     };

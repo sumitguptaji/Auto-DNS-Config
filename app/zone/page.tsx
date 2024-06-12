@@ -35,6 +35,7 @@ const ZoneContent = () => {
     proxied: false,
     priority: 0, // Add priority state
   });
+  const [isEdit, setIsEdit] = useState(false)
 
   const fetchDNSRecords = useCallback(async () => {
     try {
@@ -223,6 +224,44 @@ const ZoneContent = () => {
     setIsLoading(false);
   };
 
+  const editDNSRecord = async (recordId: string) => {
+    try {
+      if(!dnsRecords?.length) return 
+
+      let editRecord:any = dnsRecords.find((v) => v.id === recordId)
+      setNewRecord({
+        type: editRecord.type,
+        name: editRecord.name,
+        content: editRecord.content,
+        ttl: editRecord.ttl,
+        proxied: editRecord.proxied,
+        priority: editRecord.priority,
+      })
+      setIsEdit(true)
+      setIsDialogOpen(true)
+    } catch (error: any) {
+      toast.error(error.message || 'Error deleting DNS record', {
+        autoClose: 5000,
+        className: 'bg-red-500 text-white',
+        progressClassName: 'bg-red-700',
+      });
+    }
+  }
+  
+  const updateDNSRecord = async () => {
+    try {
+      console.log("Hello  ")      
+      setIsEdit(false)
+      setIsDialogOpen(false)
+    } catch (error: any) {
+      toast.error(error.message || 'Error deleting DNS record', {
+        autoClose: 5000,
+        className: 'bg-red-500 text-white',
+        progressClassName: 'bg-red-700',
+      });
+    }
+  }
+
   if (!loaded) {
     return <p className="text-center text-gray-500">Loading...</p>;
   }
@@ -262,7 +301,8 @@ const ZoneContent = () => {
               <th className="py-2 px-4 border-b text-left">Content</th>
               <th className="py-2 px-4 border-b text-left">TTL</th>
               <th className="py-2 px-4 border-b text-left">Proxied</th>
-              <th className="py-2 px-4 border-b text-left">Actions</th>
+              <th className="py-2 px-4 border-b text-left">Edit</th>
+              <th className="py-2 px-4 border-b text-left">Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -281,6 +321,14 @@ const ZoneContent = () => {
                 <td className="py-2 px-4 border-b break-words">{record.content}</td>
                 <td className="py-2 px-4 border-b">{record.ttl}</td>
                 <td className="py-2 px-4 border-b">{record.proxied ? 'Yes' : 'No'}</td>
+                <td className="py-2 px-4 border-b">
+                  <button
+                    onClick={() => editDNSRecord(record.id)}
+                    className="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-500"
+                  >
+                    Edit
+                  </button>
+                </td>
                 <td className="py-2 px-4 border-b">
                   <button
                     onClick={() => deleteDNSRecord(record.id)}
@@ -319,15 +367,15 @@ const ZoneContent = () => {
       {isDialogOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-            <h2 className="text-xl font-semibold mb-4">Add DNS Record</h2>
+            <h2 className="text-xl font-semibold mb-4">{isEdit ? "Update" :"Add"}  DNS Record</h2>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Type</label>
-              <input
-                type="text"
-                value={newRecord.type}
-                onChange={(e) => setNewRecord({ ...newRecord, type: e.target.value })}
-                className="w-full p-2 border border-gray-300 rounded"
-              />
+              <select className="w-full p-2 border border-gray-300 rounded" value={newRecord.type} onChange={(e) => setNewRecord({ ...newRecord, type: e.target.value })}>
+                <option value={""}>Select Type</option>
+                <option value={"MX"} selected={newRecord.type == "MX" ? true:false}>MX</option>
+                <option value={"TXT"} selected={newRecord.type == "TXT" ? true:false}>TXT</option>
+                <option value={"CNAME"} selected={newRecord.type == "CNAME" ? true:false}>CNAME</option>
+              </select>
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Name</label>
@@ -349,12 +397,10 @@ const ZoneContent = () => {
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">TTL</label>
-              <input
-                type="number"
-                value={newRecord.ttl}
-                onChange={(e) => setNewRecord({ ...newRecord, ttl: parseInt(e.target.value) })}
-                className="w-full p-2 border border-gray-300 rounded"
-              />
+              <select className="w-full p-2 border border-gray-300 rounded" value={newRecord.ttl} onChange={(e) => setNewRecord({ ...newRecord, ttl: parseInt(e.target.value) })}>
+                <option value={""}>Select TTL</option>
+                <option value={"3600"}>3600</option>
+              </select>
             </div>
             {newRecord.type === 'MX' && (
               <div className="mb-4">
@@ -384,10 +430,10 @@ const ZoneContent = () => {
                 Cancel
               </button>
               <button
-                onClick={addSingleDNSRecord}
+                onClick={ () => {isEdit ? updateDNSRecord() : addSingleDNSRecord() } }
                 className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
               >
-                Add Record
+                {isEdit ? "Update" :"Add"} Record
               </button>
             </div>
           </div>

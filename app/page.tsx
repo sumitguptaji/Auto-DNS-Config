@@ -43,6 +43,7 @@ export default function Home() {
 const AddZoneComponent = () => {
   const [newApiKey, setNewApiKey] = useState("");
   const [domainName, setDomainName] = useState("");
+  const [accountId, setAccountId] = useState("");
   const [error, setError] = useState("");
   const [serverNames, setServerNames] = useState([]);
 
@@ -52,7 +53,7 @@ const AddZoneComponent = () => {
       const response: any = await axios.post(
         "/api/zone/addzone",
         {
-          body: JSON.stringify({ apiKey: newApiKey, domainName }),
+          body: JSON.stringify({ apiKey: newApiKey, domainName, accountId }),
         },
         {
           headers: {
@@ -97,6 +98,14 @@ const AddZoneComponent = () => {
           type="text"
           value={domainName}
           onChange={(e) => setDomainName(e.target.value)}
+          placeholder="Enter your Cloudflare API key"
+          className="p-3 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+
+        <input
+          type="text"
+          value={accountId}
+          onChange={(e) => setAccountId(e.target.value)}
           placeholder="Enter your Cloudflare API key"
           className="p-3 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
