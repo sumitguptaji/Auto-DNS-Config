@@ -459,15 +459,6 @@ const ZoneContent = () => {
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Content</label>
-              {/* <input
-                type="text"
-                value={newRecord.content}
-                onChange={(e) =>
-                  setNewRecord({ ...newRecord, content: e.target.value })
-                }
-                className="w-full p-2 border border-gray-300 rounded"
-              /> */}
-
               <textarea
                 className="w-full p-2 border border-gray-300 rounded"
                 onChange={(e) =>
