@@ -273,16 +273,16 @@ const ZoneContent = () => {
         }),
       });
 
-      if(!response.ok) return 
-      
+      if (!response.ok) return;
+
       toast.success(response.message, {
         autoClose: 5000,
         className: "bg-green-500 text-white",
         progressClassName: "bg-green-700",
       });
 
-      setIsDialogOpen(false)
-      setIsEdit(false)
+      setIsDialogOpen(false);
+      setIsEdit(false);
       fetchDNSRecords(); // Refresh DNS records
     } catch (error: any) {
       toast.error(error.message || "Error Updated DNS record", {
@@ -459,14 +459,23 @@ const ZoneContent = () => {
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Content</label>
-              <input
+              {/* <input
                 type="text"
                 value={newRecord.content}
                 onChange={(e) =>
                   setNewRecord({ ...newRecord, content: e.target.value })
                 }
                 className="w-full p-2 border border-gray-300 rounded"
-              />
+              /> */}
+
+              <textarea
+                className="w-full p-2 border border-gray-300 rounded"
+                onChange={(e) =>
+                  setNewRecord({ ...newRecord, content: e.target.value })
+                }
+              >
+                {newRecord.content}
+              </textarea>
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">TTL</label>
