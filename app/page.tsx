@@ -128,7 +128,7 @@ const AddZoneComponent = () => {
 
       {!!serverNames?.length && (
         <React.Fragment>
-          <div className="mb-2">This domain name is {domainName}</div>
+          <div className="mb-2">Nameservers for {domainName}</div>
           <ul className="list-disc pl-5 space-y-2">
             {serverNames.map((v: any) => (
               <li
