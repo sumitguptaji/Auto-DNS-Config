@@ -478,7 +478,7 @@ const ZoneContent = () => {
                 }
               >
                 <option value={""}>Select TTL</option>
-                <option value={"3600"}>3600</option>
+                <option value={"300"}>300</option>
               </select>
             </div>
             {newRecord.type === "MX" && (
