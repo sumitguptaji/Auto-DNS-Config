@@ -433,6 +433,12 @@ const ZoneContent = () => {
                   MX
                 </option>
                 <option
+                  value={"A"}
+                  selected={newRecord.type == "A" ? true : false}
+                >
+                  A Record
+                </option>
+                <option
                   value={"TXT"}
                   selected={newRecord.type == "TXT" ? true : false}
                 >
