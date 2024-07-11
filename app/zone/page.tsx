@@ -4,8 +4,11 @@ import { Suspense, useEffect, useState, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "../../node_modules/react-toastify/dist/ReactToastify.css";
+import { CsvDataModal } from "./components/csvDataModal";
+// import csvToJson from 'convert-csv-to-json';
 
-interface DNSRecord {
+
+export interface DNSRecord {
   id: string;
   type: string;
   name: string;
@@ -15,12 +18,16 @@ interface DNSRecord {
   priority?: number; // Add priority for MX records
 }
 
+
+export type DNSRecordToAdd = Omit<DNSRecord  , "id">
+
 const ZoneContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const apiKey = searchParams.get("apiKey");
   const zoneId = searchParams.get("zoneId");
   const zoneName = searchParams.get("zoneName");
+  const [csvText , setCsvText ] = useState("")
   const [loaded, setLoaded] = useState(false);
   const [dnsRecords, setDnsRecords] = useState<DNSRecord[]>([]);
   const [selectedRecords, setSelectedRecords] = useState<Set<string>>(
@@ -301,8 +308,32 @@ const ZoneContent = () => {
     return <p className="text-center text-red-500">Error: {error}</p>;
   }
 
+
+const handleCSVfileChange = (e  : any )=>{
+  const file = e.target?.files[0]
+  if(file){
+  const reader = new  FileReader()
+  reader.readAsText(file)
+  reader.onload = (()=>{
+    console.log("reader result" , reader.result )
+    setCsvText(reader.result as string )
+  })
+
+  }
+
+}
+
+
+
+
+const addCsvRecordsCallback = ()=>{
+  // const jsonObj =    papaParse.parse(reader.result as string )
+  fetchDNSRecords()
+}
+
   return (
     <div className="max-w-4xl mx-auto p-4">
+      <CsvDataModal addRecordsCallback={addCsvRecordsCallback} csvText={csvText} setCsvText={setCsvText} />
       <ToastContainer />
       <h1 className="text-2xl font-bold mb-4">Selected Zone</h1>
       <p className="mb-2">
@@ -409,6 +440,7 @@ const ZoneContent = () => {
       >
         Add Single DNS Record
       </button>
+      <input type="file" onChange={handleCSVfileChange} />
       {isDialogOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
