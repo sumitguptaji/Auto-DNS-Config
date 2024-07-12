@@ -34,7 +34,7 @@ const generateRecordsFromCsv = (csvText : string ) : DNSRecordToAdd[] =>{
       priority: Number(row[3]),
       ttl: Number(row[4]),
       proxied: row[5] === "true" ? true : false
-  })}).filter(item=>item!== null)
+  })}).filter(item=>item!== null) as DNSRecordToAdd[]
   return records
   }
 
