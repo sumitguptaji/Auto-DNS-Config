@@ -448,14 +448,15 @@ const addCsvRecordsCallback = ()=>{
       <div className="flex gap-6 items-center" >
       <div onClick={()=>csvFileInput.current?.click()} className="w-fit my-4">
   <input ref={csvFileInput} onChange={handleCSVfileChange} type="file" id="file-input" className="file-input"/>
-  <button type="button" className=" bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">{csvText.length ? "Replace Csv file" : "Upload Csv File"}</button>
+  <button type="button" className=" bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">{"Upload Csv File"}</button>
 </div>
-      { csvText.length ?  <button
+      {/* { csvText.length ?  <button
         onClick={() => setIsCsvModalOpened(true)}
         className=" bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
       >
         View CSV data
-      </button> : null }</div>
+      </button> : null } */}
+      </div>
 
       {/* <input   className="block appearance-none text-sm text-gray-900  border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file" onChange={handleCSVfileChange} /> */}
       {isDialogOpen && (
