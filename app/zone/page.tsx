@@ -1,10 +1,11 @@
 "use client";
 
-import { Suspense, useEffect, useState, useCallback } from "react";
+import { Suspense, useEffect, useState, useCallback, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "../../node_modules/react-toastify/dist/ReactToastify.css";
 import { CsvDataModal } from "./components/csvDataModal";
+
 // import csvToJson from 'convert-csv-to-json';
 
 
@@ -26,6 +27,7 @@ const ZoneContent = () => {
   const searchParams = useSearchParams();
   const apiKey = searchParams.get("apiKey");
   const zoneId = searchParams.get("zoneId");
+  const [isCsvModalOpened, setIsCsvModalOpened] = useState(false)
   const zoneName = searchParams.get("zoneName");
   const [csvText , setCsvText ] = useState("")
   const [loaded, setLoaded] = useState(false);
@@ -36,6 +38,7 @@ const ZoneContent = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const csvFileInput = useRef<HTMLInputElement>(null)
   const [newRecord, setNewRecord] = useState({
     type: "",
     name: "",
@@ -315,10 +318,10 @@ const handleCSVfileChange = (e  : any )=>{
   const reader = new  FileReader()
   reader.readAsText(file)
   reader.onload = (()=>{
-    console.log("reader result" , reader.result )
     setCsvText(reader.result as string )
-  })
+    setIsCsvModalOpened(true)
 
+  })
   }
 
 }
@@ -329,11 +332,12 @@ const handleCSVfileChange = (e  : any )=>{
 const addCsvRecordsCallback = ()=>{
   // const jsonObj =    papaParse.parse(reader.result as string )
   fetchDNSRecords()
+  setIsCsvModalOpened(false)
 }
 
   return (
     <div className="max-w-4xl mx-auto p-4">
-      <CsvDataModal addRecordsCallback={addCsvRecordsCallback} csvText={csvText} setCsvText={setCsvText} />
+      <CsvDataModal setIsCsvModalOpened={setIsCsvModalOpened} isCsvModalOpened={isCsvModalOpened} addRecordsCallback={addCsvRecordsCallback} csvText={csvText} setCsvText={setCsvText} />
       <ToastContainer />
       <h1 className="text-2xl font-bold mb-4">Selected Zone</h1>
       <p className="mb-2">
@@ -426,6 +430,7 @@ const addCsvRecordsCallback = ()=>{
       >
         {isLoading ? "Adding..." : "Add Bulk DNS Records"}
       </button>
+
       {selectedRecords.size > 0 && (
         <button
           onClick={deleteSelectedDNSRecords}
@@ -440,7 +445,19 @@ const addCsvRecordsCallback = ()=>{
       >
         Add Single DNS Record
       </button>
-      <input type="file" onChange={handleCSVfileChange} />
+      <div className="flex gap-6 items-center" >
+      <div onClick={()=>csvFileInput.current?.click()} className="w-fit my-4">
+  <input ref={csvFileInput} onChange={handleCSVfileChange} type="file" id="file-input" className="file-input"/>
+  <button type="button" className=" bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">{csvText.length ? "Replace Csv file" : "Upload Csv File"}</button>
+</div>
+      { csvText.length ?  <button
+        onClick={() => setIsCsvModalOpened(true)}
+        className=" bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+      >
+        View CSV data
+      </button> : null }</div>
+
+      {/* <input   className="block appearance-none text-sm text-gray-900  border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file" onChange={handleCSVfileChange} /> */}
       {isDialogOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">

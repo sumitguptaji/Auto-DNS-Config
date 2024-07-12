@@ -1,7 +1,7 @@
 import { DNSRecord, DNSRecordToAdd } from "../page"
 
 
-export const CSVDataTable : React.FC<{records: DNSRecordToAdd[]}> = ({records})=>{
+export const CSVDataTable : React.FC<{records: DNSRecordToAdd[] , setJsonRecords : React.Dispatch<React.SetStateAction<DNSRecordToAdd[]>> }> = ({records , setJsonRecords  })=>{
     return         <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
     <thead>
       <tr className="bg-gray-100">
@@ -14,24 +14,36 @@ export const CSVDataTable : React.FC<{records: DNSRecordToAdd[]}> = ({records})=
       </tr>
     </thead>
     <tbody>
-      {records.map((record) => (
-        <tr key={record.name} className="hover:bg-gray-50">
-          <td className="py-2 px-4 border-b">{record.type}</td>
+      {records.map((record , index ) => {
+const updateValue = (value : string | number | boolean , field : string  )=>{
+    const recordsCopy = [...records]
+    recordsCopy[index] = {...recordsCopy[index] ,  [field]  : value}
+    setJsonRecords(recordsCopy)
+}
+
+        return (
+        <tr key={index} className="hover:bg-gray-50">
+        <td className="py-2 px-4 border-b break-words">
+        <input key="type" onChange={(e)=>updateValue(e.target.value  , "type")} value={record.type} ></input>
+        </td>
+        <td className="py-2 px-4 border-b break-words">
+        <input key="name" onChange={(e)=>updateValue(e.target.value  , "name")} value={record.name} ></input>
+        </td>
           <td className="py-2 px-4 border-b break-words">
-            {record.name}
+            <input key="content" value={record.content} onChange={(e)=>updateValue(e.target.value  , "content")} ></input>
           </td>
-          <td className="py-2 px-4 border-b break-words">
-            {record.content}
-          </td>
-          <td className="py-2 px-4 border-b">{record.ttl}</td>
           <td className="py-2 px-4 border-b">
-            {record.proxied ? "Yes" : "No"}
+          <input key="ttl" value={record.ttl} type="number" onChange={(e)=>updateValue(Number(e.target.value)  , "ttl")} ></input>
+          </td>
+          <td className="py-2 px-4 border-b">
+          <input key="proxied" checked={record.proxied} type="checkbox" id="vehicle1" name="vehicle1" value="" onChange={(e)=>updateValue(e.target.checked , "proxied" )} />
+            {/* {record.proxied ? "Yes" : "No"} */}
           </td>
           <td className="py-2 px-4 border-b break-words">
-            {record.priority}
+          <input key="priority" value={record.priority} onChange={(e)=>updateValue(Number(e.target.value)  , "priority")} ></input>
           </td>
         </tr>
-      ))}
+      )})}
     </tbody>
   </table>
 }

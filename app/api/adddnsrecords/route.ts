@@ -18,6 +18,8 @@ export async function POST(req: Request) {
     }
   };
 
+
+  
   const dnsRecords = [
     {
         type: 'MX',

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
+
 export async function POST(req: Request) {
   const { apiKey, zoneId , dnsRecords } = await req.json();
 
@@ -17,7 +18,10 @@ export async function POST(req: Request) {
     }
   };
 
+
   
+
+
   try {
     for (let record of dnsRecords) {
       await axios.post(apiUrl, record, config);
