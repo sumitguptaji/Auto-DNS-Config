@@ -25,14 +25,16 @@ const generateRecordsFromCsv = (csvText : string ) : DNSRecordToAdd[] =>{
 
 
     const jsonObj  =    papaParse.parse<any>(csvText)
-    const records : DNSRecordToAdd[] = jsonObj.data.map((row)=>({
+    const records : DNSRecordToAdd[] = jsonObj.data.map((row)=>{
+      if(row.length< 6) return null
+      return ({
       type: row[0]  ,
       name: row[1], 
       content: row[2],
       priority: Number(row[3]),
       ttl: Number(row[4]),
       proxied: row[5] === "true" ? true : false
-  }))
+  })}).filter(item=>item!== null)
   return records
   }
 
