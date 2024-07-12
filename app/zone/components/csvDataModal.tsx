@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 
 const customStyles = {
   content: {
+    padding : "8px" ,
     top: '50%',
     left: '50%',
     right: 'auto',
@@ -111,6 +112,7 @@ setJsonRecords(generateRecordsFromCsv(csvText))
         style={customStyles}
         contentLabel="Example Modal"
       >
+        <h2 className="text-xl font-semibold my-4">Review the data</h2>
        <CSVDataTable key="CSVDataTable" setJsonRecords={setJsonRecords} records={jsonRecords}  ></CSVDataTable>
        <button
         onClick={addDNSRecords}

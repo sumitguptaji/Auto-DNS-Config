@@ -2,7 +2,9 @@ import { DNSRecord, DNSRecordToAdd } from "../page"
 
 
 export const CSVDataTable : React.FC<{records: DNSRecordToAdd[] , setJsonRecords : React.Dispatch<React.SetStateAction<DNSRecordToAdd[]>> }> = ({records , setJsonRecords  })=>{
-    return         <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+    return       <div  className=" mx-auto">
+    <div  className="max-w-[97vw] overflow-x-auto" >
+    <table className="w-full bg-white border border-gray-200 rounded-lg shadow-md">
     <thead>
       <tr className="bg-gray-100">
         <th className="py-2 px-4 border-b text-left">Type</th>
@@ -45,5 +47,5 @@ const updateValue = (value : string | number | boolean , field : string  )=>{
         </tr>
       )})}
     </tbody>
-  </table>
+  </table></div></div>   
 }
