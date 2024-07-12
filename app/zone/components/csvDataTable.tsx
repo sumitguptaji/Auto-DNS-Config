@@ -24,30 +24,31 @@ const updateValue = (value : string | number | boolean , field : string  )=>{
 }
 
         return (
-        <tr key={index} className="hover:bg-gray-50">
-        <td  className="relative  min-w-[200px] border-b p-0">
-        <input className="w-full h-full px-2 m-0 absolute top-0 left-0" key="type" onChange={(e)=>updateValue(e.target.value  , "type")} value={record.type} ></input>
+        <tr  key={index} className="hover:bg-gray-50 no-tailwind relative  h-fit ">
+        <td    className="relative min-h-40    min-w-[200px] border-b p-0">
+        <div className="h-14 invisible"  ></div>
+        <input className="w-full  h-full p-5 px-2 m-0 absolute top-0 left-0" key="type" onChange={(e)=>updateValue(e.target.value  , "type")} value={record.type} ></input>
         </td>
         <td  className="relative min-w-[200px] border-b p-0">
-        <input className="w-full h-full px-2 m-0 absolute top-0 left-0" key="name"   onChange={(e)=>updateValue(e.target.value  , "name")} value={record.name} ></input>
+        <input className="w-full p-5  h-full px-2 m-0 absolute top-0 left-0" key="name"   onChange={(e)=>updateValue(e.target.value  , "name")} value={record.name} ></input>
         </td>
-        <td  className="relative min-w-[200px] border-b p-0">
+        <td  className="relative min-w-[400px] border-b p-0">
   <input
     key="content"
-    className="w-full h-full m-0 px-2 absolute top-0 left-0"
+    className="w-full h-full p-5  m-0 px-2 absolute top-0 left-0"
     value={record.content}
     onChange={(e) => updateValue(e.target.value, "content")}
   />
 </td>
           <td className="relative min-w-[200px] border-b p-0" >
-          <input className="w-full px-2 h-full m-0 absolute top-0 left-0" key="ttl" value={record.ttl} type="number" onChange={(e)=>updateValue(Number(e.target.value)  , "ttl")} ></input>
+          <input className="w-full p-5  px-2 h-full m-0 absolute top-0 left-0" key="ttl" value={record.ttl} type="number" onChange={(e)=>updateValue(Number(e.target.value)  , "ttl")} ></input>
           </td>
           <td className=" px-4 border-b">
-          <input className="h-full" key="proxied" checked={record.proxied} type="checkbox" id="vehicle1" name="vehicle1" value="" onChange={(e)=>updateValue(e.target.checked , "proxied" )} />
+          <input className="p-5  h-full" key="proxied" checked={record.proxied} type="checkbox" id="vehicle1" name="vehicle1" value="" onChange={(e)=>updateValue(e.target.checked , "proxied" )} />
             {/* {record.proxied ? "Yes" : "No"} */}
           </td>
           <td className="relative min-w-[200px]  border-b p-0">
-          <input className="w-full px-2 h-full m-0 absolute top-0 left-0"  key="priority" value={record.priority} onChange={(e)=>updateValue(Number(e.target.value)  , "priority")} ></input>
+          <input className="w-full p-5  px-2 h-full m-0 absolute top-0 left-0"  key="priority" value={record.priority} onChange={(e)=>updateValue(Number(e.target.value)  , "priority")} ></input>
           </td>
         </tr>
       )})}
