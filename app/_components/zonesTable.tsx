@@ -1,5 +1,5 @@
 import { cn } from "@/utils/tailwind-merge"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export interface ZoneInfo {name : string , name_servers : string[]    , status : string  }
 
@@ -41,6 +41,12 @@ export const ZonesTable : React.FC<{zones : ZoneInfo[] | null , loadingZones : b
 const [zonesSearchText, setZonesSearchText] = useState<string>("")
 const [pageStartItem, setpageStartItem] = useState<number>(0)
 const displayedZones = zones ?  zones?.filter(zone=>zone.name.includes(zonesSearchText)).slice(pageStartItem , pageStartItem + itemsPerPage )  : null
+
+
+
+useEffect(()=>{
+setpageStartItem(0)
+} , [zonesSearchText])
 
 const nextPage = ()=>{
     setpageStartItem((prev)=>prev + itemsPerPage)
@@ -89,9 +95,9 @@ return <div className="flex flex-col gap-7 py-16" >
         </table>}
       </div>}
       {loadingZones &&<ZonesTableSkeleton/> }
-      {zones && <div className="flex w-full justify-between px-5" >
-      <button onClick={prevPage} className={cn("bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"    , { "invisible":  pageStartItem < itemsPerPage} )}>Previous</button>
-      {pageStartItem < zones.length - itemsPerPage &&  <button onClick={nextPage} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">Next </button>}
+      {zones && <div className="flex w-full justify-between lg:px-5" >
+      <button onClick={prevPage} className={cn("bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"    , { "invisible":  pageStartItem < itemsPerPage} )}><img width={20} className="rotate-180" src="/arrow.svg" /><span>Previous</span></button>
+      {pageStartItem < zones.length - itemsPerPage &&  <button onClick={nextPage} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"><span>Next</span><img width={20} src="/arrow.svg" /></button>}
       </div>}
     </div></div>
 }
