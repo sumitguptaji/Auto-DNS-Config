@@ -2,11 +2,12 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { ZoneInfo, ZonesTable, ZonesTableSkeleton } from "./_components/zonesTable";
 
-interface Zone {
-  id: string;
-  name: string;
-}
+// interface Zone {
+//   id: string;
+//   name: string;
+// }
 
 export default function Home() {
   const [screen, setScreen] = useState(1);
@@ -147,7 +148,8 @@ const AddZoneComponent = () => {
 
 const GetZoneComponent = () => {
   const [apiKey, setApiKey] = useState("");
-  const [zones, setZones] = useState<Zone[]>([]);
+  const [loadingZones , setLoadingZones ] = useState(true)
+  const [zones, setZones] = useState<ZoneInfo[] | null>(null);
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -183,11 +185,11 @@ const GetZoneComponent = () => {
     }
   };
 
-  const handleZoneSelect = (zone: Zone) => {
-    router.push(
-      `/zone?apiKey=${apiKey}&zoneId=${zone.id}&zoneName=${zone.name}`
-    );
-  };
+  // const handleZoneSelect = (zone: ) => {
+  //   router.push(
+  //     `/zone?apiKey=${apiKey}&zoneId=${zone.id}&zoneName=${zone.name}`
+  //   );
+  // };
 
   return (
     <>
@@ -216,7 +218,7 @@ const GetZoneComponent = () => {
       {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
       {/* <ul className="list-disc pl-5 space-y-2"> */}
-      {zones.length > 0 && (
+      {/* {zones.length > 0 && (
         <div className="h-[400px] overflow-y-scroll scrollbar scrollbar-thumb-blue-600 scrollbar-style my-6">
           <ul className="list-disc pl-5 space-y-2">
             {zones.map((zone) => (
@@ -230,7 +232,9 @@ const GetZoneComponent = () => {
             ))}
           </ul>
         </div>
-      )}
+      )} */}
+    { zones &&   <ZonesTable zones={zones} />}
+    {loadingZones && <ZonesTableSkeleton/>}
     </>
   );
 };
