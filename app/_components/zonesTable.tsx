@@ -1,3 +1,4 @@
+import { cn } from "@/utils/tailwind-merge"
 import { useState } from "react"
 
 export interface ZoneInfo {name : string , name_servers : string[]    , status : string  }
@@ -51,7 +52,7 @@ const prevPage = ()=>{
 
 return <div className="flex flex-col gap-7 py-16" >
           
-{ zones &&  <div className="flex parent-focus-within gap-2 justify-between items-center p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500" >       
+{ (zones || loadingZones ) &&  <div className={ cn( "flex parent-focus-within gap-2 justify-between items-center p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500" , {"invisible" : loadingZones }) } >       
      <input
           type="text"
           value={zonesSearchText}
@@ -89,7 +90,7 @@ return <div className="flex flex-col gap-7 py-16" >
       </div>}
       {loadingZones &&<ZonesTableSkeleton/> }
       {zones && <div className="flex w-full justify-between px-5" >
-      <button onClick={prevPage} className={cn("bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"    , { "invisible":  pageStartItem > 0} )}>Previous</button>
+      <button onClick={prevPage} className={cn("bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"    , { "invisible":  pageStartItem < itemsPerPage} )}>Previous</button>
       {pageStartItem < zones.length - itemsPerPage &&  <button onClick={nextPage} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">Next </button>}
       </div>}
     </div></div>
