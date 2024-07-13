@@ -148,7 +148,7 @@ const AddZoneComponent = () => {
 
 const GetZoneComponent = () => {
   const [apiKey, setApiKey] = useState("");
-  const [loadingZones , setLoadingZones ] = useState(true)
+  const [loadingZones , setLoadingZones ] = useState(false)
   const [zones, setZones] = useState<ZoneInfo[] | null>(null);
   const [error, setError] = useState("");
   const router = useRouter();
@@ -163,6 +163,7 @@ const GetZoneComponent = () => {
   const fetchZones = async () => {
     setError("");
     try {
+      setLoadingZones(true)
       const response = await fetch("/api/zone/getzones", {
         method: "POST",
         headers: {
@@ -182,6 +183,9 @@ const GetZoneComponent = () => {
     } catch (error: any) {
       console.error("Error fetching zones:", error);
       setError(error.message);
+    }
+    finally {
+      setLoadingZones(false)
     }
   };
 

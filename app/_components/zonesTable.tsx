@@ -50,12 +50,12 @@ export const ZonesTableSkeleton = ()=>{
               <tbody>
                 {[1 , 2 , 3].map((item) => (
                   <tr key={item} className="hover:bg-gray-50">
-                    <td className="py-2 px-4 border-b"><div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-4"></div></td>
-                    <td className="py-2 px-4 border-b break-words">
-                      {[1 , 2].map(item=><p key={item} ><div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-80 mb-4"></div> <br/> </p>)}
+                    <td className="py-2 px-4 border-b"><div className=" bg-gray-200 rounded-full dark:bg-gray-700 w-32 h-5"></div></td>
+                    <td className="py-2 px-4 border-b break-words flex flex-col gap-2">
+                      {[1 , 2].map(item=><div className=" bg-gray-200 m-0 rounded-full dark:bg-gray-700 w-80 h-5"></div> )}
                     </td> 
                     <td className="py-2 px-4 border-b break-words">
-                    <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-4"></div>                    </td>
+                    <div className=" bg-gray-200 rounded-full dark:bg-gray-700 w-32 h-5"></div>                    </td>
                   </tr>
                 ))}
               </tbody>
