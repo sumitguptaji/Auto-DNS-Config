@@ -65,3 +65,9 @@ body {
   margin-left: 10px;
   font-family: Arial, sans-serif;
 }
+
+
+.parent-focus-within:focus-within {
+ 
+  @apply border border-2 border-blue-500 rounded-lg
+}

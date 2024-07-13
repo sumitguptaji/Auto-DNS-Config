@@ -164,6 +164,7 @@ const GetZoneComponent = () => {
     setError("");
     try {
       setLoadingZones(true)
+      setZones(null)
       const response = await fetch("/api/zone/getzones", {
         method: "POST",
         headers: {
@@ -237,8 +238,7 @@ const GetZoneComponent = () => {
           </ul>
         </div>
       )} */}
-    { zones &&   <ZonesTable zones={zones} />}
-    {loadingZones && <ZonesTableSkeleton/>}
+    <ZonesTable zones={zones} loadingZones={loadingZones} />
     </>
   );
 };
