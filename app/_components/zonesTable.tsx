@@ -19,7 +19,7 @@ export const ZonesTableSkeleton = ()=>{
               <tr key={item} className="hover:bg-gray-50">
                 <td className="py-2 px-4 border-b"><div className=" bg-gray-200 rounded-full dark:bg-gray-700 w-32 h-5"></div></td>
                 <td className="py-2 px-4 border-b break-words flex flex-col gap-2">
-                  {[1 , 2].map(item=><div className=" bg-gray-200 m-0 rounded-full dark:bg-gray-700 w-80 h-5"></div> )}
+                  {[1 , 2].map(item=><div key={item} className=" bg-gray-200 m-0 rounded-full dark:bg-gray-700 w-80 h-5"></div> )}
                 </td> 
                 <td className="py-2 px-4 border-b break-words">
                 <div className=" bg-gray-200 rounded-full dark:bg-gray-700 w-32 h-5"></div>                    </td>
