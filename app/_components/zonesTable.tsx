@@ -1,7 +1,8 @@
 import { cn } from "@/utils/tailwind-merge"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
-export interface ZoneInfo {name : string , name_servers : string[]    , status : string  }
+export interface ZoneInfo {id : string ,  name : string , name_servers : string[]    , status : string  }
 
 export const ZonesTableSkeleton = ()=>{
 
@@ -34,14 +35,14 @@ export const ZonesTableSkeleton = ()=>{
 
 
 
-const itemsPerPage = 6
+const itemsPerPage = 10
 
 
-export const ZonesTable : React.FC<{zones : ZoneInfo[] | null , loadingZones : boolean  }> = ({zones , loadingZones })=>{
+export const ZonesTable : React.FC<{zones : ZoneInfo[] | null , apiKey : string , loadingZones : boolean  }> = ({zones , loadingZones  , apiKey })=>{
 const [zonesSearchText, setZonesSearchText] = useState<string>("")
 const [pageStartItem, setpageStartItem] = useState<number>(0)
 const displayedZones = zones ?  zones?.filter(zone=>zone.name.includes(zonesSearchText)).slice(pageStartItem , pageStartItem + itemsPerPage )  : null
-
+const router = useRouter()
 
 
 useEffect(()=>{
@@ -55,6 +56,12 @@ const nextPage = ()=>{
 const prevPage = ()=>{
     setpageStartItem(prev=>prev - itemsPerPage)
 }
+
+
+
+const handleZoneSelect = ({id , name} : {id : string , name : string }) => {
+  router.push(`/zone?apiKey=${apiKey}&zoneId=${id}&zoneName=${name}`);
+};
 
 return <div className="flex flex-col gap-7 py-16" >
           
@@ -82,7 +89,7 @@ return <div className="flex flex-col gap-7 py-16" >
           <tbody>
             {displayedZones && displayedZones.map((zone) => (
               <tr key={zone.name} className="hover:bg-gray-50">
-                <td className="py-2 px-4 border-b">{zone.name}</td>
+                <td onClick={()=>handleZoneSelect({name: zone.name , id : zone.id })} className="py-2 px-4 cursor-pointer border-b">{zone.name}</td>
                 <td className="py-2 px-4 border-b break-words">
                   {zone.name_servers.map(nameServer=><p key={nameServer} >{nameServer} <br/> </p>)}
                 </td> 

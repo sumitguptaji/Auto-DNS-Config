@@ -238,7 +238,7 @@ const GetZoneComponent = () => {
           </ul>
         </div>
       )} */}
-    <ZonesTable zones={zones} loadingZones={loadingZones} />
+    <ZonesTable apiKey={apiKey} zones={zones} loadingZones={loadingZones} />
     </>
   );
 };
