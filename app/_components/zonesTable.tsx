@@ -1,6 +1,7 @@
 import { cn } from "@/utils/tailwind-merge"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { StatusDropdown } from "./statusDropdown"
 
 export interface ZoneInfo {id : string ,  name : string , name_servers : string[]    , status : string  }
 
@@ -36,12 +37,17 @@ export const ZonesTableSkeleton = ()=>{
 
 
 const itemsPerPage = 10
-
+export enum Statuses {
+  pending = "pending"  ,
+  active = "active" ,
+  notSelected = "notSelected"
+}
 
 export const ZonesTable : React.FC<{zones : ZoneInfo[] | null , apiKey : string , loadingZones : boolean  }> = ({zones , loadingZones  , apiKey })=>{
 const [zonesSearchText, setZonesSearchText] = useState<string>("")
 const [pageStartItem, setpageStartItem] = useState<number>(0)
-const displayedZones = zones ?  zones?.filter(zone=>zone.name.includes(zonesSearchText)).slice(pageStartItem , pageStartItem + itemsPerPage )  : null
+const [status , setStatus ] = useState<Statuses>(Statuses.notSelected)
+const displayedZones = zones ?  zones?.filter(zone=>zone.name.includes(zonesSearchText) && (status === Statuses.notSelected || status === zone.status )).slice(pageStartItem , pageStartItem + itemsPerPage )  : null
 const router = useRouter()
 
 
@@ -83,7 +89,7 @@ return <div className="flex flex-col gap-7 py-16" >
             <tr className="bg-gray-100">
               <th className="py-2 px-4 border-b text-left">Name</th>
               <th className="py-2 px-4 border-b text-left">Name Servers</th>
-              <th className="py-2 px-4 border-b text-left">Status</th>
+               <StatusDropdown status={status} setStatus={setStatus} />
             </tr>
           </thead>
           <tbody>
