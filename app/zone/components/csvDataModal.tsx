@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import { DNSRecordToAdd } from '../page';
 import papaParse from "papaparse"
@@ -25,8 +24,12 @@ const generateRecordsFromCsv = (csvText : string ) : DNSRecordToAdd[] =>{
 
 
     const jsonObj  =    papaParse.parse<any>(csvText)
-    const records : DNSRecordToAdd[] = jsonObj.data.map((row)=>{
+    const records  = jsonObj.data.map((row)=>{
       if(row.length< 6) return null
+  
+  
+  
+  
       return ({
       type: row[0]  ,
       name: row[1], 
@@ -46,7 +49,6 @@ export const  CsvDataModal  : React.FC<{setIsCsvModalOpened :   Dispatch<SetStat
     const searchParams = useSearchParams()
     const apiKey = searchParams.get("apiKey");
     const zoneId = searchParams.get("zoneId");
-    const zoneName = searchParams.get("zoneName");
 
 
 
