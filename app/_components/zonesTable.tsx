@@ -36,7 +36,7 @@ export const ZonesTableSkeleton = ()=>{
 
 
 
-const itemsPerPage = 10
+const itemsPerPage = 100
 export enum Statuses {
   pending = "pending"  ,
   active = "active" ,
