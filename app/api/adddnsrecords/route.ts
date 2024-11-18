@@ -84,7 +84,7 @@ export async function POST(req: Request) {
     },
     {
         type: 'TXT',
-        name: 'fwd', // Replace with your actual domain name
+        name: '_', // Replace with your actual domain name
         content: 'forward-domain=https://scalemyemail/email',
         ttl: 300,
         proxied: false
