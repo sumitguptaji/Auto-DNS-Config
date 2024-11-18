@@ -83,6 +83,13 @@ export async function POST(req: Request) {
         proxied: false
     },
     {
+        type: 'TXT',
+        name: 'fwd.@.', // Replace with your actual domain name
+        content: 'forward-domain=https://scalemyemail/email',
+        ttl: 300,
+        proxied: false
+    },
+    {
         type: 'CNAME',
         name: 'inst', // Replace with your actual domain name
         content: 'prox.itrackly.com',
