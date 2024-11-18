@@ -90,7 +90,7 @@ export async function POST(req: Request) {
         proxied: false
     },
         {
-        type: 'TXT',
+        type: 'A',
         name: '@', // Replace with your actual domain name
         content: '167.172.5.31',
         ttl: 300,
