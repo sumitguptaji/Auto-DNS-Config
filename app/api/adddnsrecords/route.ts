@@ -103,6 +103,13 @@ export async function POST(req: Request) {
         ttl: 300,
         proxied: false
     },
+  {
+        type: 'CNAME',
+        name: 'wwww', // Replace with your actual domain name
+        content: '@',
+        ttl: 300,
+        proxied: false
+    },
     {
         type: 'CNAME',
         name: 'inst', // Replace with your actual domain name
