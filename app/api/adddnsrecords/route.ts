@@ -89,6 +89,20 @@ export async function POST(req: Request) {
         ttl: 300,
         proxied: false
     },
+        {
+        type: 'TXT',
+        name: '@', // Replace with your actual domain name
+        content: '167.172.5.31',
+        ttl: 300,
+        proxied: false
+    },
+            {
+        type: 'AAAA',
+        name: '@', // Replace with your actual domain name
+        content: '2400:6180:0:d0::e08:a001',
+        ttl: 300,
+        proxied: false
+    },
     {
         type: 'CNAME',
         name: 'inst', // Replace with your actual domain name
